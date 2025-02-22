@@ -41,7 +41,6 @@ export class UsersService {
   }
 
   async update(updateUserInput: UpdateUserInput) {
-    // Load the user and its profile.
     const user = await this.userRepository.findOne({
       where: { id: updateUserInput.id },
     });
@@ -49,21 +48,31 @@ export class UsersService {
       throw new BadRequestException('User not found');
     }
 
-    // Update the user's email if provided.
     user.email = updateUserInput.email || user.email;
 
-    // Update the profile if provided.
     if (updateUserInput.profile) {
       user.profile.firstName = updateUserInput.profile.firstName;
       user.profile.lastName = updateUserInput.profile.lastName;
       user.profile.address = updateUserInput.profile.address;
     }
 
-    // Save and return the updated user.
     return this.userRepository.save(user);
   }
 
-  remove(id: number) {
-    return this.userRepository.softDelete({ id });
+  async remove(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    if (user.profile) {
+      await this.profileRepository.softDelete({ id: user.profile.id });
+    }
+
+    await this.userRepository.softDelete({ id });
+
+    return user;
   }
 }

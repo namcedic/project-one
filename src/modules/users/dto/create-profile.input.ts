@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 @InputType()
 export class CreateProfileInput {
   @Field()
-  @IsNotEmpty({ message: 'First name is required' }) // ✅ Ensure it's required
+  @IsNotEmpty({ message: 'First name is required' })
   firstName: string;
 
   @Field()
