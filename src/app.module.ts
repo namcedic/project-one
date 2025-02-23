@@ -11,6 +11,8 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './modules/users/users.module';
+import { BooksModule } from './modules/books/books.module';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -34,10 +36,12 @@ import { UsersModule } from './modules/users/users.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true,
+      // autoSchemaFile: true,
+      autoSchemaFile: join(process.cwd(), 'modules/schemas/*.gql'),
       debug: true,
       playground: true,
     }),
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
