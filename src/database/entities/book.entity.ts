@@ -3,7 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BaseEntity } from './base.entity';
@@ -23,7 +23,10 @@ export class BookEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: false, unique: true })
   title: string;
 
-  @OneToOne(() => UserEntity, (user) => user.books, {
+  @Column({ type: 'int', nullable: false })
+  userId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.books, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
