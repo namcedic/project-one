@@ -1,7 +1,14 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { ProfileEntity } from './profile.entity';
+import { BookEntity } from './book.entity';
 
 @ObjectType()
 @Entity({
@@ -19,4 +26,9 @@ export class UserEntity extends BaseEntity {
     cascade: true,
   })
   profile: ProfileEntity;
+
+  @OneToMany(() => BookEntity, (book) => book.author, {
+    cascade: true,
+  })
+  books: BookEntity[];
 }
