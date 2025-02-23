@@ -8,7 +8,7 @@ export class BooksResolver {
   constructor(private readonly booksService: BooksService) {}
 
   @Mutation('createBook')
-  create(@Args('createBookInput') createBookInput: CreateBookInput) {
+  createBook(@Args('createBookInput') createBookInput: CreateBookInput) {
     return this.booksService.create(createBookInput);
   }
 

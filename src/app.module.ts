@@ -18,6 +18,7 @@ import { join } from 'path';
   imports: [
     HttpModule,
     UsersModule,
+    BooksModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: envConfigs,
@@ -37,11 +38,10 @@ import { join } from 'path';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       // autoSchemaFile: true,
-      autoSchemaFile: join(process.cwd(), 'modules/schemas/*.gql'),
+      autoSchemaFile: join(process.cwd(), '/modules/schemas/*.gql'),
       debug: true,
       playground: true,
     }),
-    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
