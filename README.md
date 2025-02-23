@@ -1,30 +1,16 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+How to create a GraphQL server with NestJS: https://docs.nestjs.com/graphql/quick-start
+
+Using graphql code first approach: https://docs.nestjs.com/graphql/quick-start#code-first
+Using graphql schema first approach: https://docs.nestjs.com/graphql/quick-start#schema-first
+
+This source code using both code first and schema first approach.
+You can see the code first approach in the `src/modules/users` folder.
+And the schema first approach in the `src/modules/schemas` folder.
+
+
+Created by Cedric
 
 ## Project setup
 
@@ -41,45 +27,197 @@ $ yarn run start
 # watch mode
 $ yarn run start:dev
 
+# debug mode
+$ yarn run start:debug
+
 # production mode
 $ yarn run start:prod
 ```
 
-## Run tests
 
-```bash
-# unit tests
-$ yarn run test
 
-# e2e tests
-$ yarn run test:e2e
+GraphQL: http://localhost:3000/graphql
+- Get users
+```graphql
 
-# test coverage
-$ yarn run test:cov
+{
+  users {
+    id
+    email
+    profile {
+      id
+      firstName
+      lastName
+      address
+      userId
+    }
+  }
+}
+
 ```
 
-## Resources
+- Get user by id
+```graphql
+{
+  user(id: 1) {
+    id
+    email
+    profile {
+      id
+      firstName
+      lastName
+      address
+      userId
+    }
+  }
+}
+```
+- Create user
+```graphql
+mutation {
+  createUser(createUserInput: { 
+    email: "johndoe10@example.com",
+    profile: {
+      firstName: "John",
+      lastName: "Doe",
+      address: "Vietnam"
+    } 
+  }) {
+    id
+    email
+    profile {
+      firstName
+      lastName
+      address
+    }
+  }
+}
+```
+- Update user
+```graphql
+mutation {
+  updateUser(updateUserInput: {
+    id : 3,
+    email: "johndoe8@example.com",
+    profile: {
+      firstName: "John3",
+      lastName: "Doe3",
+      address: "Vietnam"
+    } 
+  }) {
+    id
+    email
+    profile {
+      firstName
+      lastName
+      address
+    }
+  }
+}
+```
+- Delete user
+```graphql
+mutation {
+  removeUser(id: 11) {
+    id
+    email
+  }
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
+*****************************************************************
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Get books
+```graphql
+{
+    books {
+        id
+        name
+        title
+        userId
+        author {
+            id
+            email
+            profile {
+                firstName
+                lastName
+                address
+                userId
+            }
 
-## Stay in touch
+        }
+    }
+}
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
 
-## License
+- Get book by id
+```graphql
+{
+    book (id: 1) {
+        id
+        name
+        title
+        userId
+        author {
+            id
+            email
+            profile {
+                firstName
+                lastName
+                address
+                userId
+            }
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+        }
+    }
+}
+
+```
+
+- Create book
+```graphql
+
+mutation {
+  createBook(createBookInput: { 
+    name: "book3",
+    title: "title3",
+    userId: 1
+    
+  }) {
+    id
+    name
+    title
+  }
+}
+
+```
+
+- Update book
+```graphql
+
+mutation {
+  updateBook(updateBookInput: {
+    id : 2,
+    name: "book2",
+    title: "title2"
+    userId: 2
+  }) {
+    id
+  }
+}
+
+```
+
+- Delete book
+```graphql
+
+mutation {
+  removeUser(id: 3) {
+    id
+  }
+}
+
+```
