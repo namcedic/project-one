@@ -1,0 +1,31 @@
+type User {
+  id: ID!
+  email: String!
+  profile: Profile!
+}
+
+type Profile {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  address: String!
+  userId: Int!
+}
+
+input CreateProfileInput {
+  firstName: String!
+  lastName: String!
+  address: String!
+}
+
+input CreateUserInput {
+  email: String!
+  profile: CreateProfileInput!
+}
+
+input UpdateUserInput {
+  id: Int!
+  email: String
+  profile: CreateProfileInput
+}
+

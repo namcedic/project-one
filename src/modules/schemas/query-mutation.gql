@@ -1,0 +1,18 @@
+type Query {
+  books: [Book]!
+  book(id: Int!): Book
+
+  users: [User!]!
+  user(id: Int!): User
+}
+
+type Mutation {
+  createBook(createBookInput: CreateBookInput!): Book!
+  updateBook(updateBookInput: UpdateBookInput!): Book!
+  removeBook(id: Int!): Book
+
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
